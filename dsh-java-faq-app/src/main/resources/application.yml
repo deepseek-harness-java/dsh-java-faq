@@ -1,0 +1,19 @@
+server:
+  port: 8119
+
+spring:
+  application:
+    name: dsh-java-faq
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          no-cache: true
+  jackson:
+    default-property-inclusion: non_null
+
+dsh:
+  faq:
+    data-directory: ${user.home}/.dsh-java-faq
+    harness:
+      base-url: ${DSH_HARNESS_BASE_URL:http://127.0.0.1:8090}

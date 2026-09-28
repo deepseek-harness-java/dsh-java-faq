@@ -1,0 +1,6 @@
+id: dsh-java-faq-plugin
+name: DSH FAQ Builder Plugin
+version: 0.1.0
+author: Xiaofuge
+description: FAQ building tools (ingest records, cluster questions, draft answers, dedupe, coverage gaps) for DeepSeek Harness. Drafts cite real records only, no publishing.
+entrypoint: cn.xiaofuge.dsh.com.dsh.faq.plugin.DshFaqBuilderPlugin

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DSH FAQ Builder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">FB</div>
+      <div><strong>FAQ Builder</strong><span>Powered by Harness</span></div>
+    </div>
+    <button class="primary block" id="newConversation">＋ 新对话</button>
+    <div class="section-label"><span>对话记录</span></div>
+    <div id="conversationList" class="item-list conversation-list"></div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <div>
+        <div class="title-row">
+          <span id="statusDot" class="dot"></span>
+          <h1 id="currentName">FAQ 建造器</h1>
+        </div>
+        <p id="currentDetail">记录入库 · 问题聚类 · 草稿起草 · 去重 · 覆盖缺口（草稿需人工审核）</p>
+      </div>
+      <div class="header-actions">
+        <button class="ghost" id="openIngest">📥 录入记录</button>
+        <button class="ghost icon-btn" id="toggleTheme" title="切换主题">🌙</button>
+      </div>
+    </header>
+
+    <div id="workspace" class="workspace">
+      <section class="center">
+        <div id="chatMessages" class="chat-scroll"></div>
+        <div class="composer-wrap">
+          <div id="streamStatus" class="stream-status hidden">
+            <span id="streamStatusText"><span class="status-spinner"></span>AI 正在思考</span>
+          </div>
+          <div class="composer">
+            <textarea id="chatInput" rows="1" placeholder="让 AI 整理 FAQ，例如：聚类问题并给高频主题起草 FAQ"></textarea>
+            <div class="composer-bar">
+              <span class="composer-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> 发送 · 草稿引用真实记录 · 不直接发布</span>
+              <div class="composer-actions">
+                <button class="ghost small hidden" id="stopStream">停止</button>
+                <button class="send-btn" id="sendMessage" title="发送">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="resource-sidebar">
+        <div class="resource-scroll">
+          <div class="resource-header">
+            <b>FAQ 工作台</b>
+            <button class="ghost small" id="refreshResource">刷新</button>
+          </div>
+          <nav class="resource-tabs">
+            <button data-resource-tab="cluster" class="active">聚类</button>
+            <button data-resource-tab="drafts">草稿</button>
+            <button data-resource-tab="gaps">缺口</button>
+          </nav>
+          <section class="panel" data-tab="cluster">
+            <div class="panel-title"><span>问题聚类</span></div>
+            <div class="panel-body" style="padding:8px">
+              <button class="primary block" id="runCluster">运行聚类</button>
+              <div id="clusterCard" class="muted small" style="margin-top:8px">点击"运行聚类"分析全部条目</div>
+            </div>
+          </section>
+          <section class="panel hidden" data-tab="drafts">
+            <div class="panel-title"><span>FAQ 草稿（待审核）</span></div>
+            <div class="panel-body" style="padding:8px">
+              <div id="draftsCard" class="muted small">点击"刷新"加载</div>
+            </div>
+          </section>
+          <section class="panel hidden" data-tab="gaps">
+            <div class="panel-title"><span>覆盖缺口</span></div>
+            <div class="panel-body" style="padding:8px">
+              <button class="ghost block" id="runGaps">检查缺口</button>
+              <div id="gapsCard" class="muted small" style="margin-top:8px">高频问题还没有草稿时出现在这里</div>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="modal hidden" id="ingestModal">
+    <form class="modal-card" id="ingestForm" style="width:560px">
+      <h2>录入客服记录</h2>
+      <label>标题<input name="title" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="客服对话 7"></label>
+      <label>记录原文
+        <textarea name="content" required rows="8" style="font:13px/1.6 sans-serif;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="用户：xxx？
+客服：xxx"></textarea></label>
+      <p class="muted small">自动拆分用户问题侧与客服答复侧，用于聚类与草稿起草。</p>
+      <div class="modal-actions"><button type="button" class="ghost" id="cancelIngestModal">取消</button><button class="primary">入库</button></div>
+    </form>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
